@@ -12,11 +12,13 @@ recruiter, application, and offer inside OfferLoop is invented for the simulatio
 ## 2. Two Modes
 
 ### Accept Mode (fictional job seeker)
+
 Users browse invented jobs at invented companies, "apply" through an animated review
 sequence, and always receive a simulated offer. The point is emotional catharsis: the
 "yes" that real job searching rarely gives quickly.
 
 ### Reject Mode (fictional recruiter)
+
 Users browse invented candidate profiles and reject, shortlist, or send a simulated offer
 to each one. The point is perspective and humor: understanding (and gently mocking) the
 other side of the hiring loop.
@@ -24,6 +26,7 @@ other side of the hiring loop.
 ## 3. Non-Goals / Hard Boundaries
 
 OfferLoop must never:
+
 - Present itself as a real job board or ATS.
 - Collect real résumés, SSNs, government ID, banking info, or immigration status.
 - Imply a real employer, recruiter, or candidate is involved.
@@ -48,13 +51,13 @@ Every surface that could be mistaken for a real transaction carries a visible
 
 ## 5. Modes Comparison
 
-| Aspect | Accept Mode | Reject Mode |
-|---|---|---|
-| Role played | Fictional applicant | Fictional recruiter |
-| Primary content | Fictional jobs | Fictional candidates |
-| Core action | Apply → review → offer | Reject / shortlist / offer |
-| Accent color | `--accent-accept` (emerald) | `--accent-reject` (coral) |
-| Data model | `jobs`, `applications`, `offers` | `fictional_candidates`, `simulation_actions` |
+| Aspect          | Accept Mode                      | Reject Mode                                  |
+| --------------- | -------------------------------- | -------------------------------------------- |
+| Role played     | Fictional applicant              | Fictional recruiter                          |
+| Primary content | Fictional jobs                   | Fictional candidates                         |
+| Core action     | Apply → review → offer           | Reject / shortlist / offer                   |
+| Accent color    | `--accent-accept` (emerald)      | `--accent-reject` (coral)                    |
+| Data model      | `jobs`, `applications`, `offers` | `fictional_candidates`, `simulation_actions` |
 
 ## 6. Success Criteria
 

@@ -1,7 +1,7 @@
 # OfferLoop
 
 **A fictional career simulator for real job-search stress.**
-*Get the offer. Make the decision. Repeat the loop.*
+_Get the offer. Make the decision. Repeat the loop._
 
 OfferLoop is a clearly labeled entertainment simulation — not a real job board. It has
 two modes:
@@ -27,9 +27,9 @@ Every disclosure required by the product brief is visible throughout the app —
   (Accept) / coral (Reject) / indigo (brand) accents, light & dark themes.
 - Animated homepage hero, mode-selection preview, and premium application-review /
   offer-celebration sequences (Framer Motion, reduced-motion aware).
-- Accept Mode: 36 fictional jobs, search/filter/sort with URL-persisted state, save/
-  skip/apply interactions, job details, animated review, offer celebration + share
-  card.
+- Accept Mode: 38 fictional jobs across 18 fictional companies, search/filter/sort
+  with URL-persisted state, save/skip/apply interactions, job details, animated
+  review, offer celebration + share card.
 - Reject Mode: 40 fictional candidates, drag/swipe + button + full keyboard deck
   controls, reject/shortlist/simulated-offer animations, undo, deck reset.
 - Guest mode works fully offline via validated localStorage; signing in offers an
@@ -41,16 +41,19 @@ Every disclosure required by the product brief is visible throughout the app —
   Actions CI.
 
 ### Accept Mode
+
 Fictional job seeker experience: `/accept` → job details → Apply → animated review
 (`SIMULATION IN PROGRESS`) → celebration screen with a fictional offer that is always
 accepted. Offers save to `/offers`.
 
 ### Reject Mode
+
 Fictional recruiter experience: `/reject` deck of candidate cards → reject (←),
 shortlist (→), simulated offer (↑), undo (Z), reset (R). Every profile is fictional
 and disclosed as such.
 
 ### Simulation Boundaries
+
 See `/simulation` for the full disclosure. In short: nothing in OfferLoop is a real
 job, employer, candidate, or offer; no legal or financial value attaches to any
 generated content; OfferLoop is not affiliated with LinkedIn or any real platform and
@@ -143,16 +146,24 @@ npm run db:generate-seed
 ## Development Commands
 
 ```bash
-npm run dev          # start dev server
-npm run typecheck    # tsc --noEmit
-npm run lint         # eslint
-npm run test         # vitest run
-npm run test:watch   # vitest --watch
-npm run test:e2e     # playwright test
-npm run build        # production build
-npm run start        # run production build
-npm run format       # prettier --write
+npm run dev            # start dev server
+npm run typecheck      # tsc --noEmit
+npm run lint           # eslint
+npm run test           # vitest run (102 unit + component tests)
+npm run test:watch     # vitest --watch
+npm run test:coverage  # vitest run --coverage
+npm run test:e2e       # playwright test (run `npx playwright install --with-deps` first)
+npm run build          # production build
+npm run start          # run production build
+npm run format         # prettier --write
+npm run format:check   # prettier --check (used in CI)
 ```
+
+## Git Hooks (Optional)
+
+A `.husky/pre-commit` hook (running `lint-staged`) is included. To activate it in
+your local clone, run `npx husky init` once (this updates your local git config's
+`core.hooksPath`, which we intentionally do not do automatically on your behalf).
 
 ## PWA Setup
 
@@ -179,8 +190,10 @@ primary, fully verified target.
 
 ## GitHub Actions
 
-`.github/workflows/ci.yml` runs install → typecheck → lint → unit tests → build →
-Playwright (best-effort) on every PR/push to `main`, with dependency caching.
+`.github/workflows/ci.yml` runs install → typecheck → lint → format check → unit/
+component tests → build → Playwright (best-effort, non-blocking; uploads the HTML
+report as an artifact on failure) on every PR/push to `main`, with npm and
+Playwright-browser dependency caching.
 
 ## Troubleshooting
 
@@ -198,8 +211,15 @@ the service-role key never ships to the client; analytics are opt-in and anonymi
 
 ## Known Limitations
 
-- Playwright browser binaries may need to be installed manually in restricted/offline
-  environments (`npx playwright install --with-deps`).
+- Playwright e2e specs (`e2e/*.spec.ts`) are written, typecheck-clean, and reviewed
+  against real component markup, but were **not executed** in the sandbox this
+  project was built in (insufficient disk space to install the Chromium binary).
+  Run `npx playwright install --with-deps && npm run test:e2e` on a normal machine
+  or in CI (already wired into `.github/workflows/ci.yml`) to execute them.
+- The Supabase SQL migrations, RLS policies, and `supabase/tests/rls_verification.sql`
+  were validated against a local ephemeral Postgres instance during development, but
+  have not been run against a real hosted Supabase project — do that once as part of
+  your first deployment (see `DEPLOYMENT.md`).
 - PWA icons are generated as simple original SVG/PNG assets, not custom illustration
   work.
 - Email delivery (verification/reset) depends on your Supabase project's email
