@@ -5,7 +5,7 @@
 - **Vitest** + **@testing-library/react** for unit and component tests
   (`npm run test`, `npm run test:watch`).
 - **Playwright** for end-to-end tests (`npm run test:e2e`), run against `next build &&
-  next start` for realistic behavior.
+next start` for realistic behavior.
 - Tests live under `src/**/__tests__` (unit/component, colocated with the code they
   test) and `e2e/` (Playwright specs), with shared fixtures in `src/test/fixtures` and
   helpers in `src/test/utilities`.
