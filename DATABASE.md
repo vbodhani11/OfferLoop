@@ -75,13 +75,13 @@ cannot `insert`/`update`/`delete` `jobs`/`organizations`/`fictional_candidates`.
 When Supabase is not configured, or for guest users, state is kept in versioned
 localStorage keys, validated with Zod on every read (`src/lib/storage/*`):
 
-| Key | Shape |
-|---|---|
-| `offerloop_guest_profile_v1` | display name + preferences |
-| `offerloop_guest_offers_v1` | array of guest `Offer` records |
-| `offerloop_guest_saved_jobs_v1` | array of saved job ids + timestamps |
-| `offerloop_guest_actions_v1` | capped ring buffer of recent simulation actions |
-| `offerloop_guest_settings_v1` | theme/motion/sound preferences |
+| Key                             | Shape                                           |
+| ------------------------------- | ----------------------------------------------- |
+| `offerloop_guest_profile_v1`    | display name + preferences                      |
+| `offerloop_guest_offers_v1`     | array of guest `Offer` records                  |
+| `offerloop_guest_saved_jobs_v1` | array of saved job ids + timestamps             |
+| `offerloop_guest_actions_v1`    | capped ring buffer of recent simulation actions |
+| `offerloop_guest_settings_v1`   | theme/motion/sound preferences                  |
 
 Reads use `safeParseLocalStorage(key, schema)` which never throws: invalid or missing
 data returns a typed default and clears the corrupt key.
