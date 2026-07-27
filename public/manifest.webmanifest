@@ -1,0 +1,17 @@
+{
+  "name": "OfferLoop — A Fictional Career Simulator",
+  "short_name": "OfferLoop",
+  "description": "Browse fictional jobs, receive simulated offers, and make imaginary recruiting decisions in a clearly labeled entertainment experience.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#faf8f5",
+  "theme_color": "#6366f1",
+  "icons": [
+    { "src": "/icons/192", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/512", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/192", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/512", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

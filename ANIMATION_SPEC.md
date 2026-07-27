@@ -6,6 +6,7 @@ the user's in-app "Reduced motion" profile preference), must use `transform`/`op
 only where possible, must not block interaction, and must be skippable.
 
 ## 1. Page Transitions
+
 - **Purpose:** communicate navigation between major routes.
 - **Trigger:** App Router segment change (`AnimatePresence` in a template/layout).
 - **Duration:** 250ms out / 300ms in. **Easing:** `--ease-standard`.
@@ -16,6 +17,7 @@ only where possible, must not block interaction, and must be skippable.
   new page's `<h1>` via a route-change effect.
 
 ## 2. Buttons
+
 - Hover: `translateY(-1px)` + shadow increase, 150ms `--ease-standard`.
 - Press: `scale(0.98)`, 100ms.
 - Focus: instantly visible ring, not animated.
@@ -23,6 +25,7 @@ only where possible, must not block interaction, and must be skippable.
 - Reduced motion: hover/press become instant background/border changes only.
 
 ## 3. Cards (job / candidate / offer)
+
 - Entry: staggered fade+translateY(8px), 40ms stagger, capped at 8 items animated,
   duration 250ms.
 - Hover (pointer only, `@media (hover: hover)`): `translateY(-4px)`, border glow via
@@ -31,20 +34,24 @@ only where possible, must not block interaction, and must be skippable.
 - Reserves layout box (fixed min-height) to avoid layout shift.
 
 ## 4. Loading Skeletons
+
 - Shimmer: linear-gradient sweep, 1.6s loop, `--ease-standard`.
 - Reduced motion: static pulse (opacity 0.6 ↔ 0.8, 2s) — no traveling gradient.
 
 ## 5. Toasts (Sonner)
+
 - Slide up + fade in, 200ms; auto-dismiss 4–6s with pause-on-hover; always paired
   with descriptive text (never icon-only); `aria-live="polite"` region.
 
 ## 6. Animated Counters
+
 - Session stat counters animate via `framer-motion`'s `useSpring`/`animate` on a
   numeric value over ~500ms, but the DOM text node updates in discrete accessible
   steps and a visually-hidden `aria-live="polite"` node announces only the final
   value (not every intermediate frame) to avoid screen-reader spam.
 
 ## 7. Homepage Hero Loop Animation
+
 - **Purpose:** show the "loop" concept — job in, offer out, candidate in, decision out.
 - **Trigger:** on mount, looping while tab is visible and motion is allowed.
 - **Elements:** job card travels along an SVG path into a "review" node → glow burst →
@@ -60,6 +67,7 @@ only where possible, must not block interaction, and must be skippable.
   conveys the same information.
 
 ## 8. Choose Your Mode Cards
+
 - Hover (desktop): plays a 1.2s preview loop of that mode's micro-animation
   (document glow for Accept, card-stack shuffle for Reject).
 - Touch devices: plays the preview once automatically on scroll-into-view
@@ -67,6 +75,7 @@ only where possible, must not block interaction, and must be skippable.
 - Reduced motion: shows the end-state frame only.
 
 ## 9. Application Review (Accept Mode)
+
 - 5 sequential stages, ~700ms each (600–1000ms range), total <6s.
 - Each stage: icon draws in (`pathLength` 0→1 for reduced motion off) or simple fade
   (reduced motion on), label crossfades, progress ring advances by 20%.
@@ -77,6 +86,7 @@ only where possible, must not block interaction, and must be skippable.
   no confetti, identical total timing/labels so screen-reader users get equal info.
 
 ## 10. Offer Celebration
+
 - Sequence (~3s target, skippable): backdrop dim (200ms) → expanding ring (400ms) →
   confetti burst (`canvas-confetti`, lazy-loaded, motion-gated, capped particle
   count) → logo scale-in → headline fade → card 3D-unfold (`rotateX` 90→0) → action
@@ -89,6 +99,7 @@ only where possible, must not block interaction, and must be skippable.
   offer heading.
 
 ## 11. Reject Mode Deck
+
 - Drag: `framer-motion` `useMotionValue`/`drag`, rotates card up to ±12deg based on
   x-offset, opacity fades near the swipe threshold, colored label ("Reject" /
   "Shortlist") appears with a short bounce as threshold is crossed.
@@ -105,6 +116,7 @@ only where possible, must not block interaction, and must be skippable.
   reduced motion = fade only.
 
 ## 12. Performance Guardrails
+
 - Decorative animations pause via the Page Visibility API when the tab is hidden.
 - Framer Motion components use `will-change: transform` sparingly and only while
   animating.

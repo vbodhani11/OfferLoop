@@ -6,22 +6,22 @@ utility classes (e.g. `bg-surface`, `text-accent-accept`) rather than hard-coded
 
 ## 1. Color Tokens
 
-| Token | Purpose |
-|---|---|
-| `--color-background` | Warm neutral page background |
-| `--color-surface` | Card / panel background |
-| `--color-surface-muted` | Secondary panel background |
-| `--color-foreground` | Deep navy/charcoal primary text |
-| `--color-muted-foreground` | Accessible secondary text |
-| `--color-border` | Subtle card borders |
-| `--color-brand` | Indigo/purple — shared OfferLoop branding |
-| `--color-brand-foreground` | Text/icon color on brand surfaces |
-| `--color-accept` | Emerald green — Accept Mode accent |
-| `--color-accept-foreground` | Text on accept surfaces |
-| `--color-reject` | Coral/amber — Reject Mode accent |
-| `--color-reject-foreground` | Text on reject surfaces |
+| Token                                      | Purpose                                          |
+| ------------------------------------------ | ------------------------------------------------ |
+| `--color-background`                       | Warm neutral page background                     |
+| `--color-surface`                          | Card / panel background                          |
+| `--color-surface-muted`                    | Secondary panel background                       |
+| `--color-foreground`                       | Deep navy/charcoal primary text                  |
+| `--color-muted-foreground`                 | Accessible secondary text                        |
+| `--color-border`                           | Subtle card borders                              |
+| `--color-brand`                            | Indigo/purple — shared OfferLoop branding        |
+| `--color-brand-foreground`                 | Text/icon color on brand surfaces                |
+| `--color-accept`                           | Emerald green — Accept Mode accent               |
+| `--color-accept-foreground`                | Text on accept surfaces                          |
+| `--color-reject`                           | Coral/amber — Reject Mode accent                 |
+| `--color-reject-foreground`                | Text on reject surfaces                          |
 | `--color-success` / `-warning` / `-danger` | Semantic states (always paired with icon + text) |
-| `--color-ring` | Focus ring color |
+| `--color-ring`                             | Focus ring color                                 |
 
 Light and dark themes are implemented by swapping the `:root` / `.dark` variable
 blocks. Theme follows `prefers-color-scheme` by default and can be overridden by the
