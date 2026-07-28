@@ -197,3 +197,9 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/**
+ * Reject Mode deck stacking is handled in CandidateDeckViewport with the
+ * active card in normal flow and background peeks absolutely positioned, so
+ * the viewport height always matches real candidate content.
+ */

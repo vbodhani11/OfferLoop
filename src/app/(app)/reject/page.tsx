@@ -13,8 +13,8 @@ export default function RejectModePage() {
   const activeCandidates = candidates.filter((candidate) => candidate.isActive);
 
   return (
-    <PageContainer className="flex flex-col gap-8 py-10">
-      <div className="flex flex-col gap-4">
+    <PageContainer className="flex flex-col gap-6 py-8 sm:py-10">
+      <div className="mx-auto flex w-full max-w-[560px] flex-col gap-3">
         <ModeBadge mode="reject" />
         <SectionHeading
           title="Step into Recruiter Mode"

@@ -1,0 +1,258 @@
+
+> offerloop@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.12 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.0.0.154:3000
+- Environments: .env.local
+✓ Ready in 274ms
+⚠ Turbopack's filesystem cache has been deleted because we previously detected an internal error in Turbopack. Builds or page loads may be slower as a result.
+
+ GET /icon?67f39026b01dea0d 200 in 753ms (next.js: 94ms, proxy.ts: 439ms, application-code: 221ms)
+ GET /icons/192 200 in 642ms (next.js: 631ms, application-code: 12ms)
+ GET /accept 200 in 2.4s (next.js: 2.1s, proxy.ts: 307ms, application-code: 15ms)
+ GET /accept/jobs/senior-sap-application-engineer-nova 200 in 802ms (next.js: 496ms, proxy.ts: 273ms, application-code: 33ms)
+ GET /icons/192 200 in 7ms (next.js: 2ms, application-code: 5ms)
+ GET /icon?67f39026b01dea0d 200 in 103ms (next.js: 1471µs, proxy.ts: 98ms, application-code: 4ms)
+ GET /accept 200 in 296ms (next.js: 9ms, proxy.ts: 250ms, application-code: 36ms)
+ GET /accept 200 in 103ms (next.js: 1736µs, proxy.ts: 98ms, application-code: 4ms)
+ GET /icon?67f39026b01dea0d 200 in 187ms (next.js: 4ms, proxy.ts: 175ms, application-code: 7ms)
+ GET /accept 200 in 93ms (next.js: 1784µs, proxy.ts: 88ms, application-code: 3ms)
+ GET /icons/192 200 in 15ms (next.js: 5ms, application-code: 10ms)
+ GET /icon?67f39026b01dea0d 200 in 101ms (next.js: 1043µs, proxy.ts: 96ms, application-code: 4ms)
+ GET /accept/jobs/software-engineering-intern-northstar 200 in 106ms (next.js: 10ms, proxy.ts: 69ms, application-code: 27ms)
+ GET /icons/192 200 in 7ms (next.js: 2ms, application-code: 4ms)
+ GET /icon?67f39026b01dea0d 200 in 78ms (next.js: 4ms, proxy.ts: 68ms, application-code: 6ms)
+ GET /accept 200 in 118ms (next.js: 3ms, proxy.ts: 100ms, application-code: 15ms)
+ GET /accept 200 in 82ms (next.js: 2ms, proxy.ts: 65ms, application-code: 15ms)
+ GET /icons/192 200 in 7ms (next.js: 1923µs, application-code: 5ms)
+ GET /icon?67f39026b01dea0d 200 in 139ms (next.js: 2ms, proxy.ts: 130ms, application-code: 7ms)
+ GET /accept 200 in 90ms (next.js: 4ms, proxy.ts: 79ms, application-code: 7ms)
+ GET /accept/jobs/manufacturing-data-engineer-quantum 200 in 131ms (next.js: 7ms, proxy.ts: 108ms, application-code: 17ms)
+ GET /icons/192 200 in 8ms (next.js: 3ms, application-code: 5ms)
+ GET /icon?67f39026b01dea0d 200 in 63ms (next.js: 1704µs, proxy.ts: 58ms, application-code: 4ms)
+ GET /accept/review/c7247b52-8936-47f8-bbf8-0eb31464422a 200 in 565ms (next.js: 483ms, proxy.ts: 68ms, application-code: 14ms)
+ GET /icons/192 200 in 11ms (next.js: 1939µs, application-code: 9ms)
+ GET /icon?67f39026b01dea0d 200 in 219ms (next.js: 1618µs, proxy.ts: 213ms, application-code: 5ms)
+ GET /offers/14536c2c-9c75-46d9-a0e9-24ae60aa03b8 200 in 596ms (next.js: 436ms, proxy.ts: 149ms, application-code: 11ms)
+ GET /icons/192 200 in 6ms (next.js: 2ms, application-code: 4ms)
+ GET /icon?67f39026b01dea0d 200 in 65ms (next.js: 1148µs, proxy.ts: 61ms, application-code: 3ms)
+ GET /accept 200 in 238ms (next.js: 18ms, proxy.ts: 195ms, application-code: 25ms)
+ GET /icons/192 200 in 12ms (next.js: 5ms, application-code: 8ms)
+ GET /icon?67f39026b01dea0d 200 in 179ms (next.js: 2ms, proxy.ts: 167ms, application-code: 10ms)
+ GET /accept 200 in 189ms (next.js: 6ms, proxy.ts: 173ms, application-code: 10ms)
+ GET /accept 200 in 86ms (next.js: 1499µs, proxy.ts: 82ms, application-code: 2ms)
+ GET /accept/jobs/developer-experience-engineer-harborstack 200 in 219ms (next.js: 13ms, proxy.ts: 186ms, application-code: 21ms)
+ GET /icons/192 200 in 7ms (next.js: 3ms, application-code: 5ms)
+ GET /icon?67f39026b01dea0d 200 in 74ms (next.js: 1417µs, proxy.ts: 69ms, application-code: 3ms)
+ GET /accept/review/69058201-3541-436c-9cc3-49326b5d9be5 200 in 227ms (next.js: 15ms, proxy.ts: 191ms, application-code: 21ms)
+ GET /icons/192 200 in 8ms (next.js: 2ms, application-code: 6ms)
+ GET /icon?67f39026b01dea0d 200 in 74ms (next.js: 1506µs, proxy.ts: 68ms, application-code: 4ms)
+ GET /offers 200 in 629ms (next.js: 415ms, proxy.ts: 204ms, application-code: 10ms)
+ GET /icons/192 200 in 12ms (next.js: 3ms, application-code: 9ms)
+ GET /icon?67f39026b01dea0d 200 in 70ms (next.js: 1263µs, proxy.ts: 65ms, application-code: 3ms)
+Compaction failed: Failed to compact database
+
+Caused by:
+    0: Failed to merge database files for family 2
+    1: Failed to write compressed value block
+    2: Failed to write block data
+    3: No space left on device (os error 28)
+ GET /about 200 in 461ms (next.js: 261ms, proxy.ts: 183ms, application-code: 17ms)
+ GET /icons/192 200 in 6ms (next.js: 1910µs, application-code: 4ms)
+ GET /icon?67f39026b01dea0d 200 in 144ms (next.js: 1238µs, proxy.ts: 140ms, application-code: 3ms)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+
+thread 'tokio-runtime-worker' (5127809) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:376:29:
+Failed to open /var/folders/45/sx27qp0n39bghsbrd2n2brz00000gn/T/next-panic-87a928ef6400c9d857fd10c1e6d74404.log
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'tokio-runtime-worker' (5126189) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+
+thread 'tokio-runtime-worker' (5127810) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+
+thread 'tokio-runtime-worker' (5127808) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+
+thread 'tokio-runtime-worker' (5127811) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+[Error: ENOSPC: no space left on device, write] {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'write'
+}
+⨯ uncaughtException: [Error: ENOSPC: no space left on device, write] {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'write'
+}
+⨯ uncaughtException:  [Error: ENOSPC: no space left on device, write] {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'write'
+}
+
+thread 'tokio-runtime-worker' (5127811) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+
+thread 'tokio-runtime-worker' (5127808) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127809) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+
+thread 'tokio-runtime-worker' (5127808) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+ GET /about 200 in 268ms (next.js: 4ms, proxy.ts: 69ms, application-code: 195ms)
+ GET /icons/192 200 in 15ms (next.js: 8ms, application-code: 7ms)
+ GET /icon?67f39026b01dea0d 200 in 93ms (next.js: 1255µs, proxy.ts: 88ms, application-code: 3ms)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127810) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127810) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127810) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+ GET /about 200 in 117ms (next.js: 5ms, proxy.ts: 62ms, application-code: 50ms)
+ GET /icons/192 200 in 16ms (next.js: 7ms, application-code: 9ms)
+ GET /icon?67f39026b01dea0d 200 in 65ms (next.js: 1145µs, proxy.ts: 60ms, application-code: 4ms)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+ GET /accept 200 in 91ms (next.js: 5ms, proxy.ts: 63ms, application-code: 23ms)
+ GET /icons/192 200 in 17ms (next.js: 5ms, application-code: 13ms)
+ GET /icon?67f39026b01dea0d 200 in 110ms (next.js: 1797µs, proxy.ts: 103ms, application-code: 6ms)
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127811) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127810) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127810) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127811) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127810) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+ GET /icons/192 200 in 20ms (next.js: 6ms, application-code: 14ms)
+ GET /icon?67f39026b01dea0d 200 in 64ms (next.js: 1659µs, proxy.ts: 58ms, application-code: 4ms)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125621) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5127809) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+[Error: Panic in async function] { code: 'GenericFailure' }
+Failed to flush logs to file: Error: ENOSPC: no space left on device, write
+    at ignore-listed frames {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'write'
+}
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+
+thread 'tokio-runtime-worker' (5125616) panicked at crates/next-napi-bindings/src/next_api/turbopack_ctx.rs:323:51:
+called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+⨯ [Error: Panic in async function] { code: 'GenericFailure' }
+[Error: Panic in async function] { code: 'GenericFailure' }
+

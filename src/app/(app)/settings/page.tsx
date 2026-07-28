@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useTheme } from "next-themes";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionHeading } from "@/components/layout/SectionHeading";
@@ -16,6 +17,12 @@ import {
 import { useMotionPreference } from "@/lib/motion/MotionPreferenceContext";
 import { useRepositories } from "@/lib/repositories/useRepositories";
 import { useHasMounted } from "@/lib/motion/useHasMounted";
+import { readGuestSettings, writeGuestSettings } from "@/lib/storage/guestStore";
+import {
+  QUICK_REJECTION_DEFAULT_CODES,
+  REJECTION_REASON_LABEL_BY_CODE,
+  type QuickRejectionDefaultCode,
+} from "@/features/reject/services/rejectionReasons";
 import type { CelebrationIntensity } from "@/types/domain";
 
 const CELEBRATION_OPTIONS: {
@@ -56,10 +63,30 @@ export default function SettingsPage() {
   const { repositories, userId } = useRepositories();
   const mounted = useHasMounted();
 
+  const [quickRejectionEnabled, setQuickRejectionEnabled] = useState(
+    () => readGuestSettings().quickRejectionEnabled,
+  );
+  const [defaultRejectionReason, setDefaultRejectionReason] =
+    useState<QuickRejectionDefaultCode>(() => readGuestSettings().defaultRejectionReason);
+
   const persistToProfile = (
     updates: Parameters<typeof repositories.profile.updateProfile>[1],
   ) => {
     void repositories.profile.updateProfile(userId, updates);
+  };
+
+  const persistQuickRejection = (partial: {
+    quickRejectionEnabled?: boolean;
+    defaultRejectionReason?: QuickRejectionDefaultCode;
+  }) => {
+    const current = readGuestSettings();
+    const next = {
+      ...current,
+      ...partial,
+    };
+    writeGuestSettings(next);
+    setQuickRejectionEnabled(next.quickRejectionEnabled);
+    setDefaultRejectionReason(next.defaultRejectionReason);
   };
 
   return (
@@ -184,6 +211,60 @@ export default function SettingsPage() {
               persistToProfile({ soundEnabled: checked });
             }}
           />
+        </div>
+      </section>
+
+      <section className="border-border bg-surface flex flex-col gap-5 rounded-[var(--radius-lg)] border p-6">
+        <div>
+          <h2 className="text-foreground text-lg font-semibold">Reject Mode</h2>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Quick rejection is off by default. When enabled, Reject uses your chosen
+            default reason. You can still open the full reason dialog with &ldquo;Choose
+            reason,&rdquo; and Undo always remains available.
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <Label htmlFor="quick-rejection">Quick rejection mode</Label>
+            <p className="text-muted-foreground text-xs">
+              Skip the reason dialog and use your default fictional reason.
+            </p>
+          </div>
+          <Switch
+            id="quick-rejection"
+            checked={quickRejectionEnabled}
+            onCheckedChange={(checked) => {
+              persistQuickRejection({ quickRejectionEnabled: checked });
+            }}
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="default-rejection-reason">Default rejection reason</Label>
+          <Select
+            value={defaultRejectionReason}
+            disabled={!quickRejectionEnabled}
+            onValueChange={(value) => {
+              persistQuickRejection({
+                defaultRejectionReason: value as QuickRejectionDefaultCode,
+              });
+            }}
+          >
+            <SelectTrigger id="default-rejection-reason" className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {QUICK_REJECTION_DEFAULT_CODES.map((code) => (
+                <SelectItem key={code} value={code}>
+                  {REJECTION_REASON_LABEL_BY_CODE[code]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className="text-muted-foreground text-xs">
+            &ldquo;Other&rdquo; cannot be used as the automatic default.
+          </p>
         </div>
       </section>
     </PageContainer>

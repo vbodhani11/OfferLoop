@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { applyDecision, createInitialDeckState, undoLastDecision } from "../deckEngine";
+import {
+  applyDecision,
+  createInitialDeckState,
+  resolveDragDecision,
+  SWIPE_THRESHOLD,
+  undoLastDecision,
+} from "../deckEngine";
 import type { FictionalCandidate } from "@/types/domain";
 
 function makeCandidate(id: string): FictionalCandidate {
@@ -68,6 +74,18 @@ describe("applyDecision", () => {
     expect(next.stats.offered).toBe(1);
   });
 
+  it("stores rejection details on history entries when provided", () => {
+    const state = createInitialDeckState([makeCandidate("1")]);
+    const next = applyDecision(state, "reject", {
+      reasonCode: "skills_mismatch",
+      reasonLabel: "Skills do not match",
+      source: "reject_button",
+      candidateDisplayName: "Candidate 1",
+      simulationOnly: true,
+    });
+    expect(next.history[0].rejection?.reasonCode).toBe("skills_mismatch");
+  });
+
   it("is a no-op when the queue is empty", () => {
     const state = createInitialDeckState([]);
     const next = applyDecision(state, "reject");
@@ -115,5 +133,41 @@ describe("undoLastDecision", () => {
     state = undoLastDecision(state);
     expect(state.queue.map((c) => c.id)).toEqual(["1", "2", "3"]);
     expect(state.stats).toEqual({ rejected: 0, shortlisted: 0, offered: 0 });
+  });
+});
+
+describe("resolveDragDecision", () => {
+  it("returns null when the drag stays below the threshold in every direction", () => {
+    expect(resolveDragDecision({ x: 0, y: 0 })).toBeNull();
+    expect(resolveDragDecision({ x: 50, y: 0 })).toBeNull();
+    expect(resolveDragDecision({ x: -50, y: 0 })).toBeNull();
+    expect(resolveDragDecision({ x: 0, y: -50 })).toBeNull();
+    expect(resolveDragDecision({ x: SWIPE_THRESHOLD, y: 0 })).toBeNull();
+    expect(resolveDragDecision({ x: -SWIPE_THRESHOLD, y: 0 })).toBeNull();
+  });
+
+  it("returns reject once the drag clears the threshold to the left", () => {
+    expect(resolveDragDecision({ x: -SWIPE_THRESHOLD - 1, y: 0 })).toBe("reject");
+    expect(resolveDragDecision({ x: -400, y: 10 })).toBe("reject");
+  });
+
+  it("returns shortlist once the drag clears the threshold to the right", () => {
+    expect(resolveDragDecision({ x: SWIPE_THRESHOLD + 1, y: 0 })).toBe("shortlist");
+    expect(resolveDragDecision({ x: 400, y: -10 })).toBe("shortlist");
+  });
+
+  it("returns offer once the drag clears the threshold upward and is more vertical than horizontal", () => {
+    expect(resolveDragDecision({ x: 0, y: -SWIPE_THRESHOLD - 1 })).toBe("offer");
+    expect(resolveDragDecision({ x: 10, y: -300 })).toBe("offer");
+  });
+
+  it("prefers the horizontal decision when the drag is more horizontal than vertical", () => {
+    expect(resolveDragDecision({ x: 300, y: -150 })).toBe("shortlist");
+    expect(resolveDragDecision({ x: -300, y: -150 })).toBe("reject");
+  });
+
+  it("supports a custom threshold", () => {
+    expect(resolveDragDecision({ x: -60, y: 0 }, 50)).toBe("reject");
+    expect(resolveDragDecision({ x: -40, y: 0 }, 50)).toBeNull();
   });
 });
