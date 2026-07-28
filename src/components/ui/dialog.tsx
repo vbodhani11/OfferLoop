@@ -29,10 +29,20 @@ export function DialogContent({
   className,
   children,
   showClose = true,
+  onOpenAutoFocus,
+  onCloseAutoFocus,
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
   showClose?: boolean;
 }) {
+  // Radix only restores focus to `DialogTrigger` on close. Every dialog in
+  // this app is opened from a plain, already-rendered button instead (the
+  // "open" state is fully controlled), so we track whatever had focus right
+  // before the dialog took it over and restore it ourselves on close —
+  // otherwise focus silently falls back to <body>, which fails keyboard and
+  // screen-reader users.
+  const openerElementRef = React.useRef<HTMLElement | null>(null);
+
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -41,6 +51,21 @@ export function DialogContent({
           "border-border bg-surface data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 fixed top-1/2 left-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 rounded-[var(--radius-lg)] border p-6 shadow-[var(--shadow-soft-lg)] duration-200",
           className,
         )}
+        onOpenAutoFocus={(event) => {
+          // Fires before focus moves into the dialog, so the previously
+          // focused element (the button that opened it) is still active.
+          openerElementRef.current = document.activeElement as HTMLElement | null;
+          onOpenAutoFocus?.(event);
+        }}
+        onCloseAutoFocus={(event) => {
+          onCloseAutoFocus?.(event);
+          if (event.defaultPrevented) return;
+          event.preventDefault();
+          const opener = openerElementRef.current;
+          if (opener && document.contains(opener)) {
+            opener.focus();
+          }
+        }}
         {...props}
       >
         {children}

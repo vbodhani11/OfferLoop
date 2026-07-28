@@ -116,20 +116,23 @@ target.
       (decide/undo/reset semantics), safe localStorage validation, guest repository
       round-trips + duplicate-prevention, guest→Supabase migration mapping
       (idempotency + partial-failure retry), repository selection, `isSupabaseConfigured`,
-      `usePrefersReducedMotion`. **102 tests, 17 files, all passing.**
+      `usePrefersReducedMotion`. **103 tests, 17 files, all passing.**
 - [x] RTL component tests: `SimulationBadge`, `SimulationDisclosure`, `EmptyState`,
       `ErrorState`, `ThemeToggle`, `JobCard`, `CandidateCard`, `OfferCelebration`.
 - [x] Playwright e2e specs: `homepage.spec.ts`, `accept-mode.spec.ts`,
       `reject-mode.spec.ts`, `accessibility.spec.ts`, `error-handling.spec.ts` —
-      written and typecheck/lint clean. **Not executed in this sandbox** (disk
-      space too low to install Chromium); run `npx playwright install --with-deps`
-      and then `npm run test:e2e` on a normal dev machine or in CI to execute them.
+      **executed and passing, 36/36, verified stable across repeated runs.**
+      Two real defects were found and fixed while getting the suite green (see
+      Phase 13): a duplicated legal-disclaimer sentence in the offer message,
+      and a dialog focus-restoration bug affecting every non-`DialogTrigger`
+      dialog in the app.
 
 ## Phase 12 — CI/CD
 
 - [x] `.github/workflows/ci.yml`: install → typecheck → lint → format check →
-      unit/component tests → build → Playwright (best-effort, non-blocking,
-      uploads report on failure), with npm and Playwright-browser caching.
+      unit/component tests → build → Playwright (required, blocking; uploads
+      the HTML report as an artifact on failure), with npm and
+      Playwright-browser caching.
 
 ## Phase 13 — Final Review
 
@@ -137,8 +140,27 @@ target.
       `npm run test`, `npm run build` all green as of this writing.
 - [x] Manual pass for missing imports, hydration issues, accessibility, disclosures.
 - [x] README, `.env.example`, deployment docs finalized.
-- [~] Playwright e2e suite written but unexecuted locally (see Phase 11) — logic
-  reviewed against actual component markup/ARIA roles, not run end-to-end.
+- [x] Playwright e2e suite executed end-to-end (36/36 passing, twice
+      consecutively for stability). Two real application defects were fixed
+      as a result:
+  - `generateOfferMessage()` was appending the same "not a real employment
+    offer" disclaimer sentence that `<OfferCelebration>` already renders as
+    its own standalone paragraph, so it appeared twice in every offer.
+    Removed the duplicate from the generated message.
+  - Dialogs opened from a plain button (not `<DialogTrigger>`) — the
+    keyboard-shortcuts dialog, the offer share dialog, and every
+    `ConfirmationDialog` usage — dropped focus to `<body>` on close instead
+    of returning it to the button that opened them, because Radix's default
+    `onCloseAutoFocus` only restores focus via `context.triggerRef`, which
+    stays `null` without a `DialogTrigger`. Fixed generically in the shared
+    `DialogContent` by capturing `document.activeElement` in `onOpenAutoFocus`
+    (before Radix moves focus into the dialog) and restoring it ourselves in
+    `onCloseAutoFocus`.
+  - Also fixed two flawed test assumptions (an ambiguous `getByText` match on
+    the Saved Jobs page, and a "double-click" test that raced two independent
+    Playwright actions against an element that gets detached mid-navigation)
+    and one sandbox-only config issue (`next start` crashing on
+    `uv_interface_addresses` without an explicit `-H 127.0.0.1`).
 
 ## Production Checklist
 
@@ -151,9 +173,9 @@ animation ✅ / reduced motion ✅ / no layout shift ✅ / no broken icons ✅ /
 placeholder copy ✅.
 
 **Engineering:** TypeScript passes ✅ / ESLint passes ✅ / unit+component tests
-pass ✅ (102/102) / e2e tests written but unexecuted locally ⚠️ / build passes ✅ /
-no secrets committed ✅ / no console errors ✅ / no hydration errors ✅ / error
-boundaries work ✅ / offline fallback works ✅.
+pass ✅ (103/103) / e2e tests pass ✅ (36/36) / build passes ✅ / no secrets
+committed ✅ / no console errors ✅ / no hydration errors ✅ / error boundaries
+work ✅ / offline fallback works ✅.
 
 **Security:** RLS enabled ✅ (migration + verification script written; not run
 against a live Supabase project) / user isolation verified ⚠️ (verified by SQL

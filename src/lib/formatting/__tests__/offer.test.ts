@@ -32,7 +32,7 @@ describe("generateFictionalStartDate", () => {
 });
 
 describe("generateOfferMessage", () => {
-  it("includes the recipient name, company, and title with a clear fiction disclaimer", () => {
+  it("includes the recipient name, company, and title", () => {
     const message = generateOfferMessage(
       { title: "Senior SAP Application Engineer", organizationName: "Nova Systems" },
       "Future You",
@@ -40,7 +40,17 @@ describe("generateOfferMessage", () => {
     expect(message).toContain("Future You");
     expect(message).toContain("Nova Systems");
     expect(message).toContain("Senior SAP Application Engineer");
-    expect(message).toContain("not a real employment offer");
+    expect(message).toContain("simulation");
+  });
+
+  it("does not duplicate the standalone legal disclaimer shown by <OfferCelebration>", () => {
+    // That exact sentence is rendered once, separately, by the celebration UI.
+    // If this message ever contains it too, the disclaimer would appear twice.
+    const message = generateOfferMessage(
+      { title: "Senior SAP Application Engineer", organizationName: "Nova Systems" },
+      "Future You",
+    );
+    expect(message).not.toContain("not a real employment offer");
   });
 });
 

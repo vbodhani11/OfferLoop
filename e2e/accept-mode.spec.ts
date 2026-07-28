@@ -51,7 +51,7 @@ test.describe("Accept Mode", () => {
 
     await page.getByRole("link", { name: /Saved \(/ }).click();
     await expect(page).toHaveURL(/\/saved$/);
-    await expect(page.getByText(title)).toBeVisible();
+    await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
   });
 
   test("applying runs the review animation and produces a fictional offer with a simulation watermark", async ({

@@ -82,10 +82,11 @@ test.describe("Error handling", () => {
       .locator("article")
       .first()
       .getByRole("link", { name: "Apply" });
-    await Promise.all([
-      applyLink.click(),
-      applyLink.click({ force: true }).catch(() => undefined),
-    ]);
+    // A real double-click dispatches both click events as a single Playwright
+    // action after one actionability check, modeling an actual rapid double
+    // click without racing two independent actions against an element that
+    // gets detached mid-navigation.
+    await applyLink.click({ clickCount: 2 });
     await expect(page).toHaveURL(/\/accept\/review\//);
     await page.getByRole("button", { name: "Skip animation" }).click();
     await expect(page.getByText("Career Simulation — Not a Real Job Offer")).toBeVisible({

@@ -191,9 +191,9 @@ primary, fully verified target.
 ## GitHub Actions
 
 `.github/workflows/ci.yml` runs install → typecheck → lint → format check → unit/
-component tests → build → Playwright (best-effort, non-blocking; uploads the HTML
-report as an artifact on failure) on every PR/push to `main`, with npm and
-Playwright-browser dependency caching.
+component tests → build → Playwright end-to-end tests (all 36 specs, required —
+uploads the HTML report as an artifact on failure) on every PR/push to `main`,
+with npm and Playwright-browser dependency caching.
 
 ## Troubleshooting
 
@@ -211,11 +211,6 @@ the service-role key never ships to the client; analytics are opt-in and anonymi
 
 ## Known Limitations
 
-- Playwright e2e specs (`e2e/*.spec.ts`) are written, typecheck-clean, and reviewed
-  against real component markup, but were **not executed** in the sandbox this
-  project was built in (insufficient disk space to install the Chromium binary).
-  Run `npx playwright install --with-deps && npm run test:e2e` on a normal machine
-  or in CI (already wired into `.github/workflows/ci.yml`) to execute them.
 - The Supabase SQL migrations, RLS policies, and `supabase/tests/rls_verification.sql`
   were validated against a local ephemeral Postgres instance during development, but
   have not been run against a real hosted Supabase project — do that once as part of

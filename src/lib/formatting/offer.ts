@@ -25,7 +25,11 @@ export function generateOfferMessage(
   job: Pick<Job, "title"> & { organizationName: string },
   recipientDisplayName: string,
 ): string {
-  return `Congratulations, ${recipientDisplayName}! ${job.organizationName} would be thrilled to welcome you as a ${job.title} in the OfferLoop simulation. Your fictional background impressed our imaginary hiring team, and we are excited to present this simulated offer. This is an entertainment experience. It is not a real employment offer and has no legal or financial value.`;
+  // Note: the "not a real employment offer" legal disclaimer is deliberately
+  // NOT included here — it is rendered once as its own standalone paragraph
+  // by <OfferCelebration>. Folding it into this message too would duplicate
+  // the exact same sentence twice in the rendered offer.
+  return `Congratulations, ${recipientDisplayName}! ${job.organizationName} would be thrilled to welcome you as a ${job.title} in the OfferLoop simulation. Your fictional background impressed our imaginary hiring team, and we are excited to present this simulated offer.`;
 }
 
 export function generateOfferId(seed: string): string {
