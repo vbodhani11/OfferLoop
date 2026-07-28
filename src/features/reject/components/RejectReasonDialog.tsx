@@ -94,12 +94,16 @@ function RejectReasonForm({
         />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <p className="text-foreground truncate font-medium">{candidate.displayName}</p>
+            <p className="text-foreground truncate font-medium">
+              {candidate.displayName}
+            </p>
             <Badge variant="reject" className="shrink-0 text-[10px]">
               Fictional candidate
             </Badge>
           </div>
-          <p className="text-muted-foreground line-clamp-1 text-sm">{candidate.headline}</p>
+          <p className="text-muted-foreground line-clamp-1 text-sm">
+            {candidate.headline}
+          </p>
         </div>
       </div>
 
@@ -110,7 +114,11 @@ function RejectReasonForm({
         <legend className="text-foreground mb-1 text-sm font-medium" id={reasonGroupId}>
           Rejection reason
         </legend>
-        <div role="radiogroup" aria-labelledby={reasonGroupId} className="flex flex-col gap-1.5">
+        <div
+          role="radiogroup"
+          aria-labelledby={reasonGroupId}
+          className="flex flex-col gap-1.5"
+        >
           {REJECTION_REASONS.map((reason, index) => {
             const selected = reasonCode === reason.code;
             return (
@@ -182,7 +190,12 @@ function RejectReasonForm({
       ) : null}
 
       <DialogFooter>
-        <Button type="button" variant="secondary" disabled={submitting} onClick={onCancel}>
+        <Button
+          type="button"
+          variant="secondary"
+          disabled={submitting}
+          onClick={onCancel}
+        >
           Cancel
         </Button>
         <Button
@@ -228,7 +241,7 @@ export function RejectReasonDialog({
         data-testid="reject-reason-dialog"
         className={cn(
           // Mobile: bottom sheet. Desktop: centered dialog.
-          "top-auto bottom-0 left-1/2 max-h-[min(92vh,720px)] w-full max-w-lg translate-x-[-50%] translate-y-0 overflow-y-auto rounded-b-none rounded-t-[var(--radius-xl)] pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:top-1/2 sm:bottom-auto sm:translate-y-[-50%] sm:rounded-[var(--radius-lg)] sm:pb-6",
+          "top-auto bottom-0 left-1/2 max-h-[min(92vh,720px)] w-full max-w-lg translate-x-[-50%] translate-y-0 overflow-y-auto rounded-t-[var(--radius-xl)] rounded-b-none pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:top-1/2 sm:bottom-auto sm:translate-y-[-50%] sm:rounded-[var(--radius-lg)] sm:pb-6",
         )}
         onCloseAutoFocus={(event) => {
           event.preventDefault();

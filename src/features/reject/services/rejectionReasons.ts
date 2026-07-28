@@ -64,10 +64,9 @@ export const REJECTION_REASONS: ReadonlyArray<{
 ];
 
 export const REJECTION_REASON_LABEL_BY_CODE: Record<RejectionReasonCode, string> =
-  Object.fromEntries(REJECTION_REASONS.map((reason) => [reason.code, reason.label])) as Record<
-    RejectionReasonCode,
-    string
-  >;
+  Object.fromEntries(
+    REJECTION_REASONS.map((reason) => [reason.code, reason.label]),
+  ) as Record<RejectionReasonCode, string>;
 
 export const REJECTION_SOURCES = [
   "reject_button",
@@ -115,7 +114,9 @@ export const rejectionReasonSelectionSchema = z.object({
     .default(""),
 });
 
-export type RejectionReasonSelectionInput = z.input<typeof rejectionReasonSelectionSchema>;
+export type RejectionReasonSelectionInput = z.input<
+  typeof rejectionReasonSelectionSchema
+>;
 
 export interface RejectionDetails {
   reasonCode: RejectionReasonCode;
@@ -167,7 +168,9 @@ export function parseRejectionSelection(input: {
   };
 }
 
-export function buildRejectionMetadata(details: RejectionDetails): Record<string, unknown> {
+export function buildRejectionMetadata(
+  details: RejectionDetails,
+): Record<string, unknown> {
   const metadata: Record<string, unknown> = {
     reasonCode: details.reasonCode,
     reasonLabel: details.reasonLabel,

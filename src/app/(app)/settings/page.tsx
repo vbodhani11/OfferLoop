@@ -67,9 +67,7 @@ export default function SettingsPage() {
     () => readGuestSettings().quickRejectionEnabled,
   );
   const [defaultRejectionReason, setDefaultRejectionReason] =
-    useState<QuickRejectionDefaultCode>(
-      () => readGuestSettings().defaultRejectionReason,
-    );
+    useState<QuickRejectionDefaultCode>(() => readGuestSettings().defaultRejectionReason);
 
   const persistToProfile = (
     updates: Parameters<typeof repositories.profile.updateProfile>[1],
@@ -220,9 +218,9 @@ export default function SettingsPage() {
         <div>
           <h2 className="text-foreground text-lg font-semibold">Reject Mode</h2>
           <p className="text-muted-foreground mt-1 text-sm">
-            Quick rejection is off by default. When enabled, Reject uses your
-            chosen default reason. You can still open the full reason dialog
-            with &ldquo;Choose reason,&rdquo; and Undo always remains available.
+            Quick rejection is off by default. When enabled, Reject uses your chosen
+            default reason. You can still open the full reason dialog with &ldquo;Choose
+            reason,&rdquo; and Undo always remains available.
           </p>
         </div>
 

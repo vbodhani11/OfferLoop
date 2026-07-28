@@ -100,7 +100,9 @@ describe("CandidateDeck rejection workflow", () => {
 
     await user.click(screen.getByRole("button", { name: /^Reject /i }));
     const dialog = await screen.findByTestId("reject-reason-dialog");
-    expect(within(dialog).getByRole("button", { name: "Confirm rejection" })).toBeDisabled();
+    expect(
+      within(dialog).getByRole("button", { name: "Confirm rejection" }),
+    ).toBeDisabled();
 
     await user.click(within(dialog).getByRole("radio", { name: "Skills do not match" }));
     expect(
@@ -158,7 +160,11 @@ describe("CandidateDeck rejection workflow", () => {
         name: new RegExp(`^Reject ${candidates[0].displayName}`),
       }),
     );
-    await confirmRejection(user, "Skills do not match", "Looking for deeper backend experience.");
+    await confirmRejection(
+      user,
+      "Skills do not match",
+      "Looking for deeper backend experience.",
+    );
 
     await waitFor(() => {
       expect(recordAction).toHaveBeenCalledWith(
@@ -211,7 +217,11 @@ describe("CandidateDeck rejection workflow", () => {
     expect(
       await screen.findByText("Could not record this fictional decision. Try again."),
     ).toBeInTheDocument();
-    expect(within(screen.getByTestId("reject-reason-dialog")).getByText(candidates[0].displayName)).toBeInTheDocument();
+    expect(
+      within(screen.getByTestId("reject-reason-dialog")).getByText(
+        candidates[0].displayName,
+      ),
+    ).toBeInTheDocument();
     expect(sessionBar()).toHaveTextContent("Rejected: 0");
     expect(screen.getByTestId("reject-reason-dialog")).toBeInTheDocument();
   });

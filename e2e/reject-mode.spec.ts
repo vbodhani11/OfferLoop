@@ -22,10 +22,7 @@ test.describe("Reject Mode", () => {
     const session = page.getByTestId("session-feedback-bar");
     await expect(session).toContainText("Rejected: 0");
 
-    const firstName = await page
-      .getByTestId("candidate-card")
-      .locator("h3")
-      .innerText();
+    const firstName = await page.getByTestId("candidate-card").locator("h3").innerText();
 
     await page.getByRole("button", { name: /^Reject /i }).click();
     const dialog = page.getByTestId("reject-reason-dialog");
@@ -37,7 +34,9 @@ test.describe("Reject Mode", () => {
     ).toBeVisible();
 
     // Confirm stays disabled until a reason is chosen.
-    await expect(dialog.getByRole("button", { name: "Confirm rejection" })).toBeDisabled();
+    await expect(
+      dialog.getByRole("button", { name: "Confirm rejection" }),
+    ).toBeDisabled();
 
     await dialog.getByRole("radio", { name: "Skills do not match" }).click();
     await dialog
@@ -70,13 +69,13 @@ test.describe("Reject Mode", () => {
     page,
   }) => {
     const session = page.getByTestId("session-feedback-bar");
-    const firstName = await page
-      .getByTestId("candidate-card")
-      .locator("h3")
-      .innerText();
+    const firstName = await page.getByTestId("candidate-card").locator("h3").innerText();
 
     await page.getByRole("button", { name: /^Reject /i }).click();
-    await page.getByTestId("reject-reason-dialog").getByRole("button", { name: "Cancel" }).click();
+    await page
+      .getByTestId("reject-reason-dialog")
+      .getByRole("button", { name: "Cancel" })
+      .click();
     await expect(page.getByTestId("reject-reason-dialog")).toBeHidden();
     await expect(session).toContainText("Rejected: 0");
     await expect(page.getByRole("heading", { name: firstName })).toBeVisible();
@@ -86,10 +85,7 @@ test.describe("Reject Mode", () => {
     page,
   }) => {
     const session = page.getByTestId("session-feedback-bar");
-    const firstName = await page
-      .getByTestId("candidate-card")
-      .locator("h3")
-      .innerText();
+    const firstName = await page.getByTestId("candidate-card").locator("h3").innerText();
 
     await page.getByRole("button", { name: /^Reject /i }).click();
     const dialog = page.getByTestId("reject-reason-dialog");
@@ -104,7 +100,9 @@ test.describe("Reject Mode", () => {
 
   test("shortlisting a candidate increments the shortlist counter", async ({ page }) => {
     await page.getByRole("button", { name: /^Shortlist /i }).click();
-    await expect(page.getByTestId("session-feedback-bar")).toContainText("Shortlisted: 1");
+    await expect(page.getByTestId("session-feedback-bar")).toContainText(
+      "Shortlisted: 1",
+    );
   });
 
   test("sending a simulated offer increments the offer counter and confirms no real person was contacted", async ({
@@ -176,7 +174,9 @@ test.describe("Reject Mode", () => {
     await expect(dialog).not.toBeVisible();
   });
 
-  test("candidate card fits content without an oversized blank body", async ({ page }) => {
+  test("candidate card fits content without an oversized blank body", async ({
+    page,
+  }) => {
     const card = page.getByTestId("candidate-card");
     await expect(card).toBeVisible();
     const box = await card.boundingBox();

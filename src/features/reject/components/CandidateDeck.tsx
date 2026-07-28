@@ -402,15 +402,7 @@ export function CandidateDeck({ candidates }: { candidates: FictionalCandidate[]
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [
-    current,
-    decide,
-    rejectDialogOpen,
-    requestReject,
-    resetDeck,
-    router,
-    undo,
-  ]);
+  }, [current, decide, rejectDialogOpen, requestReject, resetDeck, router, undo]);
 
   const totalDecided = deck.stats.rejected + deck.stats.shortlisted + deck.stats.offered;
 
@@ -420,8 +412,8 @@ export function CandidateDeck({ candidates }: { candidates: FictionalCandidate[]
 
       <div className="flex w-full flex-col gap-2">
         <p className="text-muted-foreground text-center text-sm">
-          {totalDecided} fictional decision{totalDecided === 1 ? "" : "s"} made this session
-          · {deck.queue.length} remaining in the deck
+          {totalDecided} fictional decision{totalDecided === 1 ? "" : "s"} made this
+          session · {deck.queue.length} remaining in the deck
         </p>
         <SessionFeedbackBar
           rejected={deck.stats.rejected}

@@ -1,7 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { Briefcase, Calendar, Clock, GraduationCap, MapPin, Sparkles } from "lucide-react";
+import {
+  Briefcase,
+  Calendar,
+  Clock,
+  GraduationCap,
+  MapPin,
+  Sparkles,
+} from "lucide-react";
 import type { FictionalCandidate } from "@/types/domain";
 import { Badge } from "@/components/ui/badge";
 import { CandidateAvatar } from "./CandidateAvatar";
@@ -115,7 +122,10 @@ export function CandidateCard({
           <div className="bg-surface-muted/50 flex flex-col gap-1.5 px-5 py-3.5">
             <div className="flex items-center justify-between gap-2 text-sm">
               <span className="text-foreground font-semibold">
-                {formatSalaryRange(candidate.expectedSalaryMin, candidate.expectedSalaryMax)}
+                {formatSalaryRange(
+                  candidate.expectedSalaryMin,
+                  candidate.expectedSalaryMax,
+                )}
               </span>
               <span className="text-muted-foreground truncate text-right">
                 {WORK_ARRANGEMENT_LABELS[candidate.preferredWorkArrangement]}

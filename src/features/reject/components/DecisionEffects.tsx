@@ -96,7 +96,10 @@ const PARTICLE_OFFSETS = [
 /** Small, restrained "paper shred" burst used on reject — limited to 6 pieces. */
 export function RejectParticles() {
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-visible" aria-hidden="true">
+    <div
+      className="pointer-events-none absolute inset-0 overflow-visible"
+      aria-hidden="true"
+    >
       {PARTICLE_OFFSETS.map((piece, index) => (
         <motion.span
           key={index}

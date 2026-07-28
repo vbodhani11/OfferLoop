@@ -49,7 +49,9 @@ describe("rejection reason codes", () => {
   });
 
   it("never exposes protected-characteristic reason labels", () => {
-    const joined = REJECTION_REASONS.map((reason) => reason.label.toLowerCase()).join(" ");
+    const joined = REJECTION_REASONS.map((reason) => reason.label.toLowerCase()).join(
+      " ",
+    );
     for (const disallowed of [
       "age",
       "gender",

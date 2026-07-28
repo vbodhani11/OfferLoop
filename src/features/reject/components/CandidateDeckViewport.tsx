@@ -199,7 +199,9 @@ function ActiveCandidateCard({
           <ConfirmedStamp decision={pendingDecision} reducedMotion={reducedMotion} />
           {pendingDecision === "reject" && !reducedMotion ? <RejectParticles /> : null}
           {pendingDecision === "shortlist" && !reducedMotion ? <ShortlistTrace /> : null}
-          {pendingDecision === "offer" ? <OfferSeal reducedMotion={reducedMotion} /> : null}
+          {pendingDecision === "offer" ? (
+            <OfferSeal reducedMotion={reducedMotion} />
+          ) : null}
         </>
       ) : null}
     </motion.div>
@@ -231,7 +233,10 @@ export function CandidateDeckViewport({
         CandidateCard — never from min-height / vh / stretched empty shells.
       */}
       {!reducedMotion && upNext.length > 0 ? (
-        <div className="pointer-events-none absolute inset-x-0 top-0 bottom-0" aria-hidden="true">
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 bottom-0"
+          aria-hidden="true"
+        >
           {upNext
             .slice(0, 2)
             .map((candidate, index) => (

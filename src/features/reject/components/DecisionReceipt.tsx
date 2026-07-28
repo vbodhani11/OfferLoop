@@ -53,7 +53,9 @@ export function DecisionReceipt({
       <p className="text-reject text-xs font-semibold tracking-wide uppercase">
         Candidate rejected
       </p>
-      <p className="text-foreground mt-1 text-base font-semibold">{candidateDisplayName}</p>
+      <p className="text-foreground mt-1 text-base font-semibold">
+        {candidateDisplayName}
+      </p>
 
       <dl className="mt-3 flex flex-col gap-1 text-sm">
         <div className="flex flex-col gap-0.5">
