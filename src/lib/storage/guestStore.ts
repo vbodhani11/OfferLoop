@@ -76,6 +76,8 @@ const DEFAULT_GUEST_SETTINGS: GuestSettings = {
   soundEnabled: false,
   reducedMotion: false,
   themePreference: "system",
+  quickRejectionEnabled: false,
+  defaultRejectionReason: "skills_mismatch",
 };
 
 export function readGuestSettings(): GuestSettings {

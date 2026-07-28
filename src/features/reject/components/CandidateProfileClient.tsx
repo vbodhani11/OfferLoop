@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -18,11 +18,16 @@ import { PageContainer } from "@/components/layout/PageContainer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CandidateAvatar } from "./CandidateAvatar";
+import {
+  RejectReasonDialog,
+  type RejectReasonConfirmPayload,
+} from "./RejectReasonDialog";
 import { formatSalaryRange } from "@/lib/formatting";
 import { WORK_ARRANGEMENT_LABELS } from "@/lib/constants/categories";
 import { useRepositories } from "@/lib/repositories/useRepositories";
 import { useGuestSession } from "@/lib/context/GuestSessionContext";
-import { getRandomRejectMessage } from "@/features/reject/services/rejectMessages";
+import { getRandomRejectReceiptMessage } from "@/features/reject/services/rejectMessages";
+import { buildRejectionMetadata } from "@/features/reject/services/rejectionReasons";
 import { recordRecruitingDecisionMilestone } from "@/lib/storage/pwaMilestone";
 import type { DeckDecision, FictionalCandidate } from "@/types/domain";
 
@@ -30,6 +35,9 @@ export function CandidateProfileClient({ candidate }: { candidate: FictionalCand
   const router = useRouter();
   const { repositories, userId } = useRepositories();
   const { anonymousSessionId } = useGuestSession();
+  const [rejectOpen, setRejectOpen] = useState(false);
+  const [rejectSubmitting, setRejectSubmitting] = useState(false);
+  const [rejectError, setRejectError] = useState<string | null>(null);
 
   useEffect(() => {
     void repositories.actions.recordAction({
@@ -41,25 +49,55 @@ export function CandidateProfileClient({ candidate }: { candidate: FictionalCand
     // eslint-disable-next-line react-hooks/exhaustive-deps -- run once per candidate
   }, [candidate.id]);
 
-  const decide = async (decision: DeckDecision) => {
+  const decide = async (decision: Exclude<DeckDecision, "reject">) => {
     const actionType =
-      decision === "reject"
-        ? "candidate_rejected"
-        : decision === "shortlist"
-          ? "candidate_shortlisted"
-          : "candidate_offered";
-    await repositories.actions.recordAction({
-      userId: userId === "guest" ? null : userId,
-      anonymousSessionId,
-      actionType,
-      candidateId: candidate.id,
-    });
+      decision === "shortlist" ? "candidate_shortlisted" : "candidate_offered";
+    try {
+      await repositories.actions.recordAction({
+        userId: userId === "guest" ? null : userId,
+        anonymousSessionId,
+        actionType,
+        candidateId: candidate.id,
+      });
+    } catch {
+      toast.error("Could not record this fictional decision. Try again.");
+      return;
+    }
 
-    if (decision === "reject") toast(getRandomRejectMessage());
-    else if (decision === "shortlist")
-      toast.success(`${candidate.displayName} shortlisted.`);
+    if (decision === "shortlist") toast.success(`${candidate.displayName} shortlisted.`);
     else toast.success("Simulated offer created. No real person was contacted.");
 
+    recordRecruitingDecisionMilestone();
+    router.push("/reject");
+  };
+
+  const confirmReject = async (payload: RejectReasonConfirmPayload) => {
+    setRejectSubmitting(true);
+    setRejectError(null);
+    try {
+      await repositories.actions.recordAction({
+        userId: userId === "guest" ? null : userId,
+        anonymousSessionId,
+        actionType: "candidate_rejected",
+        candidateId: candidate.id,
+        metadata: buildRejectionMetadata({
+          reasonCode: payload.reasonCode,
+          reasonLabel: payload.reasonLabel,
+          comment: payload.comment,
+          source: payload.source,
+          candidateDisplayName: candidate.displayName,
+          simulationOnly: true,
+        }),
+      });
+    } catch {
+      setRejectSubmitting(false);
+      setRejectError("Could not record this fictional decision. Try again.");
+      return;
+    }
+
+    setRejectOpen(false);
+    setRejectSubmitting(false);
+    toast(getRandomRejectReceiptMessage());
     recordRecruitingDecisionMilestone();
     router.push("/reject");
   };
@@ -192,13 +230,39 @@ export function CandidateProfileClient({ candidate }: { candidate: FictionalCand
         </div>
 
         <aside className="border-border bg-surface hidden flex-col gap-4 rounded-[var(--radius-lg)] border p-5 lg:sticky lg:top-24 lg:flex">
-          <ProfileActions candidate={candidate} onDecide={decide} />
+          <ProfileActions
+            candidate={candidate}
+            onReject={() => setRejectOpen(true)}
+            onDecide={decide}
+          />
         </aside>
       </div>
 
       <div className="border-border bg-surface/95 fixed inset-x-0 bottom-0 z-30 flex flex-col gap-3 border-t p-4 backdrop-blur sm:hidden">
-        <ProfileActions candidate={candidate} onDecide={decide} compact />
+        <ProfileActions
+          candidate={candidate}
+          onReject={() => setRejectOpen(true)}
+          onDecide={decide}
+          compact
+        />
       </div>
+
+      <RejectReasonDialog
+        open={rejectOpen}
+        candidate={candidate}
+        source="reject_button"
+        submitting={rejectSubmitting}
+        errorMessage={rejectError}
+        onCancel={() => {
+          if (!rejectSubmitting) {
+            setRejectOpen(false);
+            setRejectError(null);
+          }
+        }}
+        onConfirm={(payload) => {
+          void confirmReject(payload);
+        }}
+      />
     </PageContainer>
   );
 }
@@ -214,11 +278,13 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function ProfileActions({
   candidate,
+  onReject,
   onDecide,
   compact = false,
 }: {
   candidate: FictionalCandidate;
-  onDecide: (decision: DeckDecision) => void;
+  onReject: () => void;
+  onDecide: (decision: Exclude<DeckDecision, "reject">) => void;
   compact?: boolean;
 }) {
   return (
@@ -247,7 +313,7 @@ function ProfileActions({
           variant="reject"
           size={compact ? "md" : "lg"}
           className="flex-1"
-          onClick={() => onDecide("reject")}
+          onClick={onReject}
         >
           <X className="h-4 w-4" /> {!compact ? "Reject" : ""}
         </Button>

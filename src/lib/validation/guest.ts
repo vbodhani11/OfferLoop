@@ -1,4 +1,8 @@
 import { z } from "zod";
+import {
+  quickRejectionDefaultCodeSchema,
+  type QuickRejectionDefaultCode,
+} from "@/features/reject/services/rejectionReasons";
 
 export const celebrationIntensitySchema = z.enum(["minimal", "standard", "maximum"]);
 export const themePreferenceSchema = z.enum(["system", "light", "dark"]);
@@ -27,8 +31,13 @@ export const guestSettingsSchema = z.object({
   soundEnabled: z.boolean().default(false),
   reducedMotion: z.boolean().default(false),
   themePreference: themePreferenceSchema.default("system"),
+  /** When true, Reject uses the configured default reason without opening the dialog. Off by default. */
+  quickRejectionEnabled: z.boolean().default(false),
+  /** Must be a predefined job-related reason; `other` is not allowed as the automatic default. */
+  defaultRejectionReason: quickRejectionDefaultCodeSchema.default("skills_mismatch"),
 });
 export type GuestSettings = z.infer<typeof guestSettingsSchema>;
+export type { QuickRejectionDefaultCode };
 
 export const guestOfferSchema = z.object({
   id: z.string(),
