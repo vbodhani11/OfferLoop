@@ -10,6 +10,7 @@ import { useGuestSession } from "@/lib/context/GuestSessionContext";
 import { usePrefersReducedMotion } from "@/lib/motion/usePrefersReducedMotion";
 import { generateFictionalStartDate, generateOfferMessage } from "@/lib/formatting/offer";
 import { recordOfferReceivedMilestone } from "@/lib/storage/pwaMilestone";
+import { notifyMilestoneAction } from "@/features/milestones/notify";
 import type { CreateOfferInput } from "@/lib/repositories/types";
 import type { JobWithOrganization, Offer } from "@/types/domain";
 import { OfferCelebration } from "./OfferCelebration";
@@ -80,12 +81,14 @@ export function ApplicationReviewFlow({ job }: { job: JobWithOrganization }) {
         actionType: "job_applied",
         jobId: job.id,
       });
+      notifyMilestoneAction("fictional_application_submitted");
       await repositories.actions.recordAction({
         userId: userId === "guest" ? null : userId,
         anonymousSessionId,
         actionType: "offer_created",
         jobId: job.id,
       });
+      notifyMilestoneAction("fictional_offer_received");
       setOffer(createdOffer);
       setSaveError(false);
     } catch {

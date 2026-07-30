@@ -44,6 +44,11 @@ export function GuestMigrationPrompt() {
       } else {
         toast("No guest data needed migrating.");
       }
+      if (summary.milestonesSynced) {
+        toast.success("Progress synced", {
+          description: "Your fictional milestones are now connected to your account.",
+        });
+      }
     } catch {
       toast.error(
         "We could not migrate all of your guest data. You can try again from your profile.",

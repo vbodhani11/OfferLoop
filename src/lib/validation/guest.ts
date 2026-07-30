@@ -35,6 +35,10 @@ export const guestSettingsSchema = z.object({
   quickRejectionEnabled: z.boolean().default(false),
   /** Must be a predefined job-related reason; `other` is not allowed as the automatic default. */
   defaultRejectionReason: quickRejectionDefaultCodeSchema.default("skills_mismatch"),
+  /** Playful milestone celebrations after fictional actions. On by default. */
+  milestoneCelebrationsEnabled: z.boolean().default(true),
+  /** Achievement unlocked toasts. On by default. */
+  achievementNotificationsEnabled: z.boolean().default(true),
 });
 export type GuestSettings = z.infer<typeof guestSettingsSchema>;
 export type { QuickRejectionDefaultCode };

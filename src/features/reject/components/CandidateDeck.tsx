@@ -43,10 +43,22 @@ import { useMotionPreference } from "@/lib/motion/MotionPreferenceContext";
 import { playDecisionSound } from "@/lib/audio/playEffect";
 import { triggerHapticFeedback } from "@/lib/motion/haptics";
 import { recordRecruitingDecisionMilestone } from "@/lib/storage/pwaMilestone";
+import { notifyMilestoneAction, notifyMilestoneUndo } from "@/features/milestones/notify";
 import { useRepositories } from "@/lib/repositories/useRepositories";
 import { useGuestSession } from "@/lib/context/GuestSessionContext";
 import { readGuestSettings } from "@/lib/storage/guestStore";
 import type { DeckDecision, FictionalCandidate } from "@/types/domain";
+
+function decisionToMilestoneKind(
+  decision: DeckDecision,
+):
+  | "fictional_candidate_rejected"
+  | "fictional_candidate_shortlisted"
+  | "fictional_offer_sent" {
+  if (decision === "reject") return "fictional_candidate_rejected";
+  if (decision === "shortlist") return "fictional_candidate_shortlisted";
+  return "fictional_offer_sent";
+}
 
 function logSafeActionError(error: unknown): void {
   if (process.env.NODE_ENV === "production") return;
@@ -197,6 +209,7 @@ export function CandidateDeck({ candidates }: { candidates: FictionalCandidate[]
           candidateId: candidate.id,
           metadata: buildRejectionMetadata(rejection),
         });
+        notifyMilestoneAction("fictional_candidate_rejected");
       } catch (error) {
         logSafeActionError(error);
         setRejectSubmitting(false);
@@ -276,6 +289,11 @@ export function CandidateDeck({ candidates }: { candidates: FictionalCandidate[]
           candidateId: decidedCandidate.id,
         })
         .then(() => {
+          notifyMilestoneAction(
+            decision === "shortlist"
+              ? "fictional_candidate_shortlisted"
+              : "fictional_offer_sent",
+          );
           runExitAnimation(decision, decidedCandidate);
         })
         .catch((error) => {
@@ -323,6 +341,7 @@ export function CandidateDeck({ candidates }: { candidates: FictionalCandidate[]
           }
         : { previousDecision: lastEntry.decision },
     });
+    notifyMilestoneUndo(decisionToMilestoneKind(lastEntry.decision));
     toast(`Undid decision for ${lastEntry.candidate.displayName}.`);
     announce(`Undid decision for ${lastEntry.candidate.displayName}.`);
   }, [

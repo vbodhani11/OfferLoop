@@ -29,6 +29,7 @@ import { useGuestSession } from "@/lib/context/GuestSessionContext";
 import { getRandomRejectReceiptMessage } from "@/features/reject/services/rejectMessages";
 import { buildRejectionMetadata } from "@/features/reject/services/rejectionReasons";
 import { recordRecruitingDecisionMilestone } from "@/lib/storage/pwaMilestone";
+import { notifyMilestoneAction } from "@/features/milestones/notify";
 import type { DeckDecision, FictionalCandidate } from "@/types/domain";
 
 export function CandidateProfileClient({ candidate }: { candidate: FictionalCandidate }) {
@@ -59,6 +60,11 @@ export function CandidateProfileClient({ candidate }: { candidate: FictionalCand
         actionType,
         candidateId: candidate.id,
       });
+      notifyMilestoneAction(
+        decision === "shortlist"
+          ? "fictional_candidate_shortlisted"
+          : "fictional_offer_sent",
+      );
     } catch {
       toast.error("Could not record this fictional decision. Try again.");
       return;
@@ -89,6 +95,7 @@ export function CandidateProfileClient({ candidate }: { candidate: FictionalCand
           simulationOnly: true,
         }),
       });
+      notifyMilestoneAction("fictional_candidate_rejected");
     } catch {
       setRejectSubmitting(false);
       setRejectError("Could not record this fictional decision. Try again.");

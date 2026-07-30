@@ -31,11 +31,14 @@ import { useRepositories } from "@/lib/repositories/useRepositories";
 import { useGuestSession } from "@/lib/context/GuestSessionContext";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { clearAllGuestData } from "@/lib/storage/guestStore";
+import { ProgressSummaryCard } from "@/features/milestones/components/ProgressSummaryCard";
+import { useMilestones } from "@/features/milestones/MilestoneProvider";
 
 export default function ProfilePage() {
   const router = useRouter();
   const { repositories, userId, isGuest } = useRepositories();
   const { setDisplayName: setGuestDisplayName } = useGuestSession();
+  const { lifetimeCounts, unlockedAchievements } = useMilestones();
   const [loaded, setLoaded] = useState(false);
   const [deleteHistoryOpen, setDeleteHistoryOpen] = useState(false);
   const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
@@ -253,6 +256,14 @@ export default function ProfilePage() {
           </Button>
         </form>
       ) : null}
+
+      <div id="achievements">
+        <ProgressSummaryCard
+          counts={lifetimeCounts}
+          unlocked={unlockedAchievements}
+          isGuest={isGuest}
+        />
+      </div>
 
       <div className="border-border bg-surface flex flex-col gap-3 rounded-[var(--radius-lg)] border p-6">
         <h2 className="text-foreground text-lg font-semibold">Data & account</h2>

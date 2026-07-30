@@ -23,6 +23,7 @@ import {
 import { useRepositories } from "@/lib/repositories/useRepositories";
 import { useGuestSession } from "@/lib/context/GuestSessionContext";
 import { useDebouncedValue } from "@/lib/motion/useDebouncedValue";
+import { notifyMilestoneAction } from "@/features/milestones/notify";
 import type { JobWithOrganization } from "@/types/domain";
 import Link from "next/link";
 
@@ -143,6 +144,7 @@ function AcceptModePageContent() {
           actionType: "job_saved",
           jobId: job.id,
         });
+        notifyMilestoneAction("fictional_job_saved");
         toast.success("Saved to My Saved Jobs.");
       }
     } catch {

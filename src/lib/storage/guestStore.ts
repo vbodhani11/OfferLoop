@@ -78,6 +78,8 @@ const DEFAULT_GUEST_SETTINGS: GuestSettings = {
   themePreference: "system",
   quickRejectionEnabled: false,
   defaultRejectionReason: "skills_mismatch",
+  milestoneCelebrationsEnabled: true,
+  achievementNotificationsEnabled: true,
 };
 
 export function readGuestSettings(): GuestSettings {

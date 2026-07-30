@@ -7,6 +7,7 @@ import { SectionHeading } from "@/components/layout/SectionHeading";
 import { SimulationBadge } from "@/components/branding/SimulationBadge";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -18,6 +19,10 @@ import { useMotionPreference } from "@/lib/motion/MotionPreferenceContext";
 import { useRepositories } from "@/lib/repositories/useRepositories";
 import { useHasMounted } from "@/lib/motion/useHasMounted";
 import { readGuestSettings, writeGuestSettings } from "@/lib/storage/guestStore";
+import { useMilestones } from "@/features/milestones/MilestoneProvider";
+import { playMilestoneSound } from "@/features/milestones/playMilestoneSound";
+import { clearMilestoneProgress } from "@/features/milestones/storage";
+import { ConfirmationDialog } from "@/components/feedback/ConfirmationDialog";
 import {
   QUICK_REJECTION_DEFAULT_CODES,
   REJECTION_REASON_LABEL_BY_CODE,
@@ -60,8 +65,10 @@ export default function SettingsPage() {
     systemReducedMotion,
   } = useMotionPreference();
   const { theme, setTheme } = useTheme();
-  const { repositories, userId } = useRepositories();
+  const { repositories, userId, isGuest } = useRepositories();
   const mounted = useHasMounted();
+  const { settings, updateSettings } = useMilestones();
+  const [resetMilestonesOpen, setResetMilestonesOpen] = useState(false);
 
   const [quickRejectionEnabled, setQuickRejectionEnabled] = useState(
     () => readGuestSettings().quickRejectionEnabled,
@@ -216,6 +223,95 @@ export default function SettingsPage() {
 
       <section className="border-border bg-surface flex flex-col gap-5 rounded-[var(--radius-lg)] border p-6">
         <div>
+          <h2 className="text-foreground text-lg font-semibold">
+            Milestone celebrations
+          </h2>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Optional playful rewards after fictional applications, hiring decisions,
+            offers, and saved jobs. Never required to keep using OfferLoop.
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <Label htmlFor="milestone-celebrations">Milestone celebrations</Label>
+            <p className="text-muted-foreground text-xs">
+              Show compact toasts and milestone cards. On by default.
+            </p>
+          </div>
+          <Switch
+            id="milestone-celebrations"
+            checked={settings.celebrationsEnabled}
+            onCheckedChange={(checked) => {
+              updateSettings({ celebrationsEnabled: checked });
+            }}
+          />
+        </div>
+
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <Label htmlFor="achievement-notifications">Achievement notifications</Label>
+            <p className="text-muted-foreground text-xs">
+              Small badge toasts when a permanent achievement unlocks.
+            </p>
+          </div>
+          <Switch
+            id="achievement-notifications"
+            checked={settings.achievementNotificationsEnabled}
+            onCheckedChange={(checked) => {
+              updateSettings({ achievementNotificationsEnabled: checked });
+            }}
+          />
+        </div>
+
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <Label htmlFor="milestone-sound">Celebration sound</Label>
+            <p className="text-muted-foreground text-xs">
+              Short chime for major milestones. Off by default. Uses the same sound
+              preference as other OfferLoop effects when enabled here.
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              disabled={!settings.celebrationSoundEnabled && !soundEnabled}
+              onClick={() => playMilestoneSound()}
+              aria-label="Preview celebration sound"
+            >
+              Preview
+            </Button>
+            <Switch
+              id="milestone-sound"
+              checked={settings.celebrationSoundEnabled}
+              onCheckedChange={(checked) => {
+                updateSettings({ celebrationSoundEnabled: checked });
+                if (checked) setSoundEnabled(true);
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="border-border border-t pt-4">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setResetMilestonesOpen(true)}
+          >
+            Reset milestone progress
+          </Button>
+          <p className="text-muted-foreground mt-2 text-xs">
+            Erases milestone counts and achievements for{" "}
+            {isGuest ? "this device" : "your account on this device"}. Does not undo
+            applications, offers, or hiring decisions.
+          </p>
+        </div>
+      </section>
+
+      <section className="border-border bg-surface flex flex-col gap-5 rounded-[var(--radius-lg)] border p-6">
+        <div>
           <h2 className="text-foreground text-lg font-semibold">Reject Mode</h2>
           <p className="text-muted-foreground mt-1 text-sm">
             Quick rejection is off by default. When enabled, Reject uses your chosen
@@ -267,6 +363,25 @@ export default function SettingsPage() {
           </p>
         </div>
       </section>
+
+      <ConfirmationDialog
+        open={resetMilestonesOpen}
+        onOpenChange={setResetMilestonesOpen}
+        title="Reset milestone progress?"
+        description="This erases your fictional milestone counts, unlocked achievements, and already-seen celebration history for the current user on this device. It does not delete applications, offers, saved jobs, or hiring decisions."
+        confirmLabel="Reset milestones"
+        cancelLabel="Cancel"
+        onConfirm={() => {
+          clearMilestoneProgress(isGuest ? null : userId);
+          updateSettings({
+            celebrationsEnabled: true,
+            achievementNotificationsEnabled: true,
+            celebrationSoundEnabled: false,
+          });
+          setResetMilestonesOpen(false);
+          window.location.reload();
+        }}
+      />
     </PageContainer>
   );
 }
