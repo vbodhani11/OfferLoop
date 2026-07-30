@@ -24,6 +24,7 @@ import {
 } from "@/lib/constants/categories";
 import { useRepositories } from "@/lib/repositories/useRepositories";
 import { useGuestSession } from "@/lib/context/GuestSessionContext";
+import { notifyMilestoneAction } from "@/features/milestones/notify";
 import type { JobWithOrganization } from "@/types/domain";
 
 export function JobDetailsClient({
@@ -63,6 +64,13 @@ export function JobDetailsClient({
       } else {
         await repositories.savedJobs.saveJob(userId, job.id);
         setIsSaved(true);
+        await repositories.actions.recordAction({
+          userId: userId === "guest" ? null : userId,
+          anonymousSessionId,
+          actionType: "job_saved",
+          jobId: job.id,
+        });
+        notifyMilestoneAction("fictional_job_saved");
         toast.success("Saved to My Saved Jobs.");
       }
     } catch {

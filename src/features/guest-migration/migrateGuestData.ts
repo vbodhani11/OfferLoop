@@ -7,11 +7,13 @@ import {
   writeGuestOffers,
   writeGuestSavedJobs,
 } from "@/lib/storage/guestStore";
+import { migrateGuestMilestones } from "@/features/milestones/migrateGuestMilestones";
 
 export interface MigrationSummary {
   offersMigrated: number;
   savedJobsMigrated: number;
   applicationsMigrated: number;
+  milestonesSynced: boolean;
 }
 
 /**
@@ -28,6 +30,7 @@ export async function migrateGuestData(
     offersMigrated: 0,
     savedJobsMigrated: 0,
     applicationsMigrated: 0,
+    milestonesSynced: false,
   };
 
   const guestApplications = readGuestApplications();
@@ -90,6 +93,13 @@ export async function migrateGuestData(
     }
   }
   writeGuestSavedJobs(remainingSavedJobs);
+
+  try {
+    migrateGuestMilestones(userId);
+    summary.milestonesSynced = true;
+  } catch {
+    summary.milestonesSynced = false;
+  }
 
   await repositories.actions.recordAction({
     userId,

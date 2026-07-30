@@ -245,6 +245,40 @@ export type SimulationActionInsert = {
   metadata?: Record<string, unknown>;
 };
 
+export type UserAchievementRow = {
+  id: string;
+  user_id: string;
+  achievement_code: string;
+  unlocked_at: string;
+  progress_at_unlock: number;
+  metadata: Record<string, unknown>;
+  created_at: string;
+};
+
+export type UserAchievementInsert = {
+  user_id: string;
+  achievement_code: string;
+  unlocked_at?: string;
+  progress_at_unlock?: number;
+  metadata?: Record<string, unknown>;
+};
+
+export type UserMilestoneEventRow = {
+  id: string;
+  user_id: string;
+  milestone_key: string;
+  displayed_at: string;
+  metadata: Record<string, unknown>;
+  created_at: string;
+};
+
+export type UserMilestoneEventInsert = {
+  user_id: string;
+  milestone_key: string;
+  displayed_at?: string;
+  metadata?: Record<string, unknown>;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -294,6 +328,18 @@ export type Database = {
         Row: SimulationActionRow;
         Insert: SimulationActionInsert;
         Update: Partial<SimulationActionInsert>;
+        Relationships: [];
+      };
+      user_achievements: {
+        Row: UserAchievementRow;
+        Insert: UserAchievementInsert;
+        Update: Partial<UserAchievementInsert>;
+        Relationships: [];
+      };
+      user_milestone_events: {
+        Row: UserMilestoneEventRow;
+        Insert: UserMilestoneEventInsert;
+        Update: Partial<UserMilestoneEventInsert>;
         Relationships: [];
       };
     };

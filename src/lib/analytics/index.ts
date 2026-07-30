@@ -12,7 +12,14 @@ export type AnalyticsEvent =
   | "candidate_simulated_offer_created"
   | "guest_migration_completed"
   | "pwa_install_prompt_shown"
-  | "pwa_installed";
+  | "pwa_installed"
+  | "milestone_reached"
+  | "achievement_unlocked"
+  | "milestone_dismissed"
+  | "milestone_progress_viewed"
+  | "milestone_share_started"
+  | "milestone_share_completed"
+  | "milestone_setting_changed";
 
 function isAnalyticsEnabled(): boolean {
   return process.env.NEXT_PUBLIC_ANALYTICS_ENABLED === "true";

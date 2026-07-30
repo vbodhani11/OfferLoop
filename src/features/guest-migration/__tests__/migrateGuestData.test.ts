@@ -105,6 +105,7 @@ describe("migrateGuestData", () => {
       offersMigrated: 1,
       savedJobsMigrated: 1,
       applicationsMigrated: 1,
+      milestonesSynced: true,
     });
     expect(repositories.actions.recordAction).toHaveBeenCalledWith(
       expect.objectContaining({ userId: "user-1", actionType: "guest_data_migrated" }),

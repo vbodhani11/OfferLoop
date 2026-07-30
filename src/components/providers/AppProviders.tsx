@@ -7,6 +7,7 @@ import { MotionPreferenceProvider } from "@/lib/motion/MotionPreferenceContext";
 import { GuestSessionProvider } from "@/lib/context/GuestSessionContext";
 import { ToastProvider } from "@/components/feedback/ToastProvider";
 import { GuestMigrationPrompt } from "@/features/guest-migration/GuestMigrationPrompt";
+import { MilestoneProvider } from "@/features/milestones/MilestoneProvider";
 
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
@@ -18,11 +19,13 @@ export function AppProviders({ children }: { children: ReactNode }) {
     >
       <MotionPreferenceProvider>
         <GuestSessionProvider>
-          <TooltipProvider delayDuration={200}>
-            {children}
-            <ToastProvider />
-            <GuestMigrationPrompt />
-          </TooltipProvider>
+          <MilestoneProvider>
+            <TooltipProvider delayDuration={200}>
+              {children}
+              <ToastProvider />
+              <GuestMigrationPrompt />
+            </TooltipProvider>
+          </MilestoneProvider>
         </GuestSessionProvider>
       </MotionPreferenceProvider>
     </ThemeProvider>
